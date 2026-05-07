@@ -15,24 +15,28 @@ df = compute_returns(df)
 # Extract returns column
 data = df[['returns']].values
 
-# Scale data
-scaled_data, scaler = scale_data(data)
+# Split BEFORE scaling
+train_size = int(0.8 * len(data))
 
-# Create sequences
-X, y = create_sequences(scaled_data)
+train_data = data[:train_size]
+test_data = data[train_size:]
+
+# Fit scaler only on training data
+scaled_train, scaler = scale_data(train_data)
+
+# Transform test data using same scaler
+scaled_test = scaler.transform(test_data)
+
+# Create sequences separately
+X_train, y_train = create_sequences(scaled_train)
+X_test, y_test = create_sequences(scaled_test)
 
 # Convert to PyTorch tensors
-X = torch.tensor(X, dtype=torch.float32)
-y = torch.tensor(y, dtype=torch.float32)
+X_train = torch.tensor(X_train, dtype=torch.float32)
+y_train = torch.tensor(y_train, dtype=torch.float32)
 
-# Time-aware train/test split
-train_size = int(0.8 * len(X))
-
-X_train = X[:train_size]
-X_test = X[train_size:]
-
-y_train = y[:train_size]
-y_test = y[train_size:]
+X_test = torch.tensor(X_test, dtype=torch.float32)
+y_test = torch.tensor(y_test, dtype=torch.float32)
 
 print("Train shape:", X_train.shape)
 print("Test shape:", X_test.shape)
