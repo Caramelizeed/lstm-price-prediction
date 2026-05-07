@@ -6,7 +6,7 @@ from src.data.features import create_sequences
 from src.models.lstm import LSTMModel
 
 from src.models.train import train_model
-
+from src.evaluation.metrics import evaluate_model
 
 # Data ingestion
 df = fetch_data()
@@ -48,6 +48,8 @@ model = LSTMModel()
 
 #train model 
 train_model(model, X_train, y_train)
+# Evaluate model
+predictions = evaluate_model(model, X_test, y_test)
 
 # Forward pass sanity check
 sample_X = X_train[:32]
