@@ -5,6 +5,8 @@ from src.data.preprocess import compute_returns, scale_data
 from src.data.features import create_sequences
 from src.models.lstm import LSTMModel
 
+from src.models.train import train_model
+
 
 # Data ingestion
 df = fetch_data()
@@ -43,6 +45,9 @@ print("Test shape:", X_test.shape)
 
 # Initialize model
 model = LSTMModel()
+
+#train model 
+train_model(model, X_train, y_train)
 
 # Forward pass sanity check
 sample_X = X_train[:32]
