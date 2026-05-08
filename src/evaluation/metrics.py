@@ -16,4 +16,4 @@ def evaluate_model(model, X_test, y_test):
 
     print(f"Test Loss: {loss.item():.6f}")
 
-    return predictions
+    return predictions, loss.item()

@@ -1,5 +1,5 @@
 import torch
-
+import numpy as np
 from src.data.loader import fetch_data
 from src.data.preprocess import compute_returns, scale_data
 from src.data.features import create_sequences
@@ -49,12 +49,31 @@ model = LSTMModel()
 #train model 
 train_model(model, X_train, y_train)
 # Evaluate model
-predictions = evaluate_model(model, X_test, y_test)
+predictions, test_loss = evaluate_model(model, X_test, y_test)
+
+predictions = predictions.numpy()
+actuals = y_test.numpy()
+
+print("\nFirst 10 Predictions vs Actuals:\n")
+
+for i in range(10):
+    print(
+        f"Pred: {predictions[i][0]:.6f} | "
+        f"Actual: {actuals[i][0]:.6f}"
+    )
+pred_signs = np.sign(predictions)
+actual_signs = np.sign(actuals)
+
+directional_accuracy = np.mean(pred_signs == actual_signs)
+
+print(f"\nDirectional Accuracy: {directional_accuracy:.4f}")
 
 # Forward pass sanity check
 sample_X = X_train[:32]
 
 output = model(sample_X)
+
+
 
 print("Input shape:", sample_X.shape)
 print("Output shape:", output.shape)
