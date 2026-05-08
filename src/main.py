@@ -29,9 +29,16 @@ scaled_train, scaler = scale_data(train_data)
 # Transform test data using same scaler
 scaled_test = scaler.transform(test_data)
 
-# Create sequences separately
-X_train, y_train = create_sequences(scaled_train)
-X_test, y_test = create_sequences(scaled_test)
+# Create sequences
+X_train, y_train = create_sequences(
+    scaled_train,
+    train_data
+)
+
+X_test, y_test = create_sequences(
+    scaled_test,
+    test_data
+)
 
 # Convert to PyTorch tensors
 X_train = torch.tensor(X_train, dtype=torch.float32)
