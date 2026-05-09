@@ -38,8 +38,8 @@ feature_columns = [
 # Input features
 X_data = df[feature_columns].values
 
-# Target = future raw returns only
-y_data = df[['returns']].values
+# Binary direction target
+y_data = (df['returns'] > 0).astype(int).values.reshape(-1, 1)
 
 
 # -----------------------------

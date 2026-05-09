@@ -11,4 +11,4 @@ class LSTMModel(nn.Module):
     def forward(self, x):
         out, _ = self.lstm(x)
         out = out[:, -1, :]   # last timestep
-        return self.fc(out)
+        return torch.sigmoid(self.fc(out))

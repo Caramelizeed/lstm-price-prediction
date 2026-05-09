@@ -4,7 +4,7 @@ import torch.nn as nn
 
 def train_model(model, X_train, y_train, epochs=50, lr=0.001):
 
-    criterion = nn.MSELoss()
+    criterion = nn.BCELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
 
     for epoch in range(epochs):
