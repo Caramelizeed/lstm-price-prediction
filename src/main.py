@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import matplotlib.pyplot as plt
 
 from src.data.loader import fetch_data
 from src.data.preprocess import compute_returns, scale_data
@@ -138,3 +139,22 @@ directional_accuracy = np.mean(
 )
 
 print(f"\nDirectional Accuracy: {directional_accuracy:.4f}")
+
+#---------------------------
+#plit predictions vs actuals
+#---------------------------
+
+plt.figure(figsize=(12, 6))
+plt.plot(
+    actuals[:200],
+    label='Actual'
+)
+plt.plot(
+    predictions[:200],
+    label='Predicted'
+)
+plt.title('Predicted vs Actual Returns (First 200 Points)')
+plt.xlabel('Time Step')
+plt.ylabel('Log Return')
+plt.legend()
+plt.show()
